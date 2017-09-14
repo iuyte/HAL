@@ -24,22 +24,27 @@
  * Fix a linking issue
  */
 extern "C" {
-  void __libc_init_array();
-	void * __dso_handle;
+void __libc_init_array();
+void *__dso_handle;
 }
 
 void initializeIO() {
-  __libc_init_array();
-}
+	__libc_init_array();
+} /* initializeIO */
 
 void initialize() {
-  drive::upperLeft = new Alpaca::Motor(-1, 2);
-  drive::upperRight = new Alpaca::Motor(-1);
-  drive::lowerLeft = new Alpaca::Motor();
-  drive::lowerRight = new Alpaca::Motor(-1);
+	drive::upperLeft  = new Alpaca::Motor(1, 2);
+	drive::upperRight = new Alpaca::Motor(-1);
+	drive::lowerLeft  = new Alpaca::Motor();
+	drive::lowerRight = new Alpaca::Motor(-1);
 
-  drive::left  = new Alpaca::System(NULL, {drive::upperLeft, drive::upperRight});
-  drive::right = new Alpaca::System(NULL, {drive::lowerLeft, drive::lowerLeft});
+	sensors::left  = new Alpaca::sensors::Quad(1, false, 2);
+	sensors::right = new Alpaca::sensors::Quad(5, true, 6);
+
+	drive::left = new Alpaca::System(sensors::left,
+	                                 { drive::upperLeft, drive::lowerLeft });
+	drive::right = new Alpaca::System(sensors::right,
+	                                  { drive::upperRight, drive::lowerRight });
 
 	Alpaca::init();
-}
+} /* initialize */

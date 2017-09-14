@@ -23,10 +23,18 @@
 
 #include "main.hpp"
 
+#define PI 3.141592653589793238462643383279502884197169399375105820974944592307
+
+namespace sensors {
+	extern Alpaca::sensors::Quad *left, *right;
+}
+
 namespace drive {
-  extern Alpaca::Motor *upperLeft, *upperRight, *lowerLeft, *lowerRight;
-  extern Alpaca::System *left, *right;
-  void set(int l, int r);
+	extern Alpaca::Motor  *upperLeft, *upperRight, *lowerLeft, *lowerRight;
+	extern Alpaca::System *left, *right;
+	void set(int l,
+	         int r);
+	static const float inch = 4 * PI;
 }
 
 #endif /* end of header include guard: ROBOT_H */

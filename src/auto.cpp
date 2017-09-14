@@ -20,4 +20,29 @@
 
 #include "../include/robot.hpp"
 
-void autonomous() {}
+#define L 0
+#define R 1
+
+Alpaca::Pid::Settings *settings[2];
+
+void autonomous() {
+	settings[L] =  new Alpaca::Pid::Settings(1.5,
+	                                         .2,
+	                                         .18,
+	                                         *drive::left);
+	settings[R] = new Alpaca::Pid::Settings(1.5,
+	                                        .2,
+	                                        .18,
+	                                        *drive::right);
+
+	taskCreate([] (void *none) {taskCreate([] (void *none) {Alpaca::Pid(
+	                                                          settings[L], 12 *
+	                                                          drive::inch);
+																				 }, TASK_DEFAULT_STACK_SIZE, NULL,
+	                                       TASK_PRIORITY_DEFAULT);
+	                            Alpaca::Pid(settings[R],
+	                                        12 * drive::inch);
+						 }, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+
+	while (isEnabled()) ;
+} /* autonomous */

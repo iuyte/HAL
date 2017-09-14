@@ -21,14 +21,14 @@
 #include "../include/robot.hpp"
 
 namespace sensors {
-  Alpaca::sensors::Quad *left, *right;
+	Alpaca::sensors::Quad *left, *right;
 }
 
 namespace drive {
-  Alpaca::Motor *upperLeft, *upperRight, *lowerLeft, *lowerRight;
-  Alpaca::System *left, *right;
-  void set(int l, int r) {
-    left->set(l);
-    right->set(r);
-  }
+	Alpaca::Motor  *upperLeft, *upperRight, *lowerLeft, *lowerRight;
+	Alpaca::System *left, *right;
+	void set(int l, int r) {
+		left->set(l);
+		right->set(r);
+	} /* set */
 }

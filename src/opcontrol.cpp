@@ -22,8 +22,9 @@
 
 void opcontrol() {
 	auto j = Alpaca::Joystick();
+
 	while (isEnabled()) {
-    drive::set(j.analog(1), j.analog(3));
+		drive::set(j.analog(1), j.analog(3));
 		Alpaca::debug::debug();
 	}
-}
+} /* opcontrol */
