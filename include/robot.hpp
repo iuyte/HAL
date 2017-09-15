@@ -24,6 +24,12 @@
 #include "main.hpp"
 
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307
+#define GO(func, ...) taskCreate([] (void *none) {                 \
+                                   func(__VA_ARGS__);              \
+                                   taskSuspend(                    \
+                                     NULL);                        \
+																 }, TASK_DEFAULT_STACK_SIZE, NULL, \
+                                 TASK_PRIORITY_DEFAULT)
 
 namespace sensors {
 	extern Alpaca::sensors::Quad *left, *right;

@@ -24,25 +24,15 @@
 #define R 1
 
 Alpaca::Pid::Settings *settings[2];
+TaskHandle tasks[2];
 
 void autonomous() {
-	settings[L] =  new Alpaca::Pid::Settings(1.5,
-	                                         .2,
-	                                         .18,
-	                                         *drive::left);
-	settings[R] = new Alpaca::Pid::Settings(1.5,
-	                                        .2,
-	                                        .18,
-	                                        *drive::right);
+	settings[L] =  new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::left);
+	settings[R] = new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::right);
 
-	taskCreate([] (void *none) {taskCreate([] (void *none) {Alpaca::Pid(
-	                                                          settings[L], 12 *
-	                                                          drive::inch);
-																				 }, TASK_DEFAULT_STACK_SIZE, NULL,
-	                                       TASK_PRIORITY_DEFAULT);
-	                            Alpaca::Pid(settings[R],
-	                                        12 * drive::inch);
-						 }, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+	tasks[L] = GO(Alpaca::Pid, settings[L], 12 * drive::inch);
+	tasks[R] = GO(Alpaca::Pid, settings[R], 12 * drive::inch);
 
-	while (isEnabled()) ;
+	while (taskGetState(tasks[L]) != TASK_SUSPENDED ||
+	       taskGetState(tasks[R]) != TASK_SUSPENDED) ;
 } /* autonomous */
