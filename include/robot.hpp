@@ -42,11 +42,12 @@ namespace sensors {
 }
 
 namespace drive {
-	extern Alpaca::Motor  *upperLeft, *upperRight, *lowerLeft, *lowerRight;
 	extern Alpaca::System *left, *right;
 	void set(int l,
 	         int r);
 	static const float inch = 4 * PI;
 }
+
+extern Alpaca::System *lift;
 
 #endif /* end of header include guard: ROBOT_H */

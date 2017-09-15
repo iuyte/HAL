@@ -33,19 +33,24 @@ void initializeIO() {
 } /* initializeIO */
 
 void initialize() {
-	drive::upperLeft  = new Alpaca::Motor(1, 2);
-	drive::upperRight = new Alpaca::Motor(-1);
-	drive::lowerLeft  = new Alpaca::Motor();
-	drive::lowerRight = new Alpaca::Motor(-1);
-
 	sensors::left  = new Alpaca::sensors::Quad(1, false, 2);
 	sensors::right = new Alpaca::sensors::Quad(5, true, 6);
 	sensors::lift  = new Alpaca::sensors::Quad(7, false, 8);
 
-	drive::left = new Alpaca::System(sensors::left,
-	                                 { drive::upperLeft, drive::lowerLeft });
-	drive::right = new Alpaca::System(sensors::right,
-	                                  { drive::upperRight, drive::lowerRight });
+	drive::left  = new Alpaca::System(sensors::left, {
+          			   new Alpaca::Motor(1, 2),
+	                 new Alpaca::Motor()
+			           });
+	drive::right = new Alpaca::System(sensors::right, {
+			             new Alpaca::Motor(-1),
+	                 new Alpaca::Motor(-1)
+			           });
+	lift         = new Alpaca::System(sensors::lift, {
+			             new Alpaca::Motor(),
+	                 new Alpaca::Motor(),
+									 new Alpaca::Motor(-1),
+									 new Alpaca::Motor(-1)
+			           });
 
 	Alpaca::init();
 } /* initialize */

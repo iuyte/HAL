@@ -23,8 +23,8 @@
 #define L 0
 #define R 1
 
-Alpaca::Pid::Settings *settings[2];
-TaskHandle tasks[2];
+Alpaca::Pid::Settings *settings[3];
+TaskHandle tasks[3];
 
 void autonomous() {
 	settings[L] = new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::left);
@@ -37,4 +37,7 @@ void autonomous() {
 	            return taskGetState(tasks[L]) == TASK_SUSPENDED &&
 	            taskGetState(tasks[R]) == TASK_SUSPENDED;
 						});
+
+	settings[2] = new Alpaca::Pid::Settings(1.2, 0.4, 0.2, *drive::left);
+	Alpaca::Pid(settings[2], 100);
 } /* autonomous */
