@@ -27,12 +27,14 @@ Alpaca::Pid::Settings *settings[2];
 TaskHandle tasks[2];
 
 void autonomous() {
-	settings[L] =  new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::left);
+	settings[L] = new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::left);
 	settings[R] = new Alpaca::Pid::Settings(1.5, 0.2, 0.18, *drive::right);
 
 	tasks[L] = GO(Alpaca::Pid, settings[L], 12 * drive::inch);
 	tasks[R] = GO(Alpaca::Pid, settings[R], 12 * drive::inch);
 
-	while (taskGetState(tasks[L]) != TASK_SUSPENDED ||
-	       taskGetState(tasks[R]) != TASK_SUSPENDED) ;
+	waitUntil([] () {
+	            return taskGetState(tasks[L]) == TASK_SUSPENDED &&
+	            taskGetState(tasks[R]) == TASK_SUSPENDED;
+						});
 } /* autonomous */

@@ -31,8 +31,14 @@
 																 }, TASK_DEFAULT_STACK_SIZE, NULL, \
                                  TASK_PRIORITY_DEFAULT)
 
+static inline void waitUntil(bool (*func)(), unsigned long d = 5) {
+	while (!func()) {
+		delay(d);
+	}
+} /* waitUntil */
+
 namespace sensors {
-	extern Alpaca::sensors::Quad *left, *right;
+	extern Alpaca::sensors::Quad *left, *right, *lift;
 }
 
 namespace drive {

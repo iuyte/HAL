@@ -21,7 +21,7 @@
 #include "../include/robot.hpp"
 
 namespace sensors {
-	Alpaca::sensors::Quad *left, *right;
+	Alpaca::sensors::Quad *left, *right, *lift;
 }
 
 namespace drive {

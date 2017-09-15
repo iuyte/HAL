@@ -40,6 +40,7 @@ void initialize() {
 
 	sensors::left  = new Alpaca::sensors::Quad(1, false, 2);
 	sensors::right = new Alpaca::sensors::Quad(5, true, 6);
+	sensors::lift  = new Alpaca::sensors::Quad(7, false, 8);
 
 	drive::left = new Alpaca::System(sensors::left,
 	                                 { drive::upperLeft, drive::lowerLeft });
